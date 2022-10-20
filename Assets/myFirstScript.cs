@@ -61,12 +61,12 @@ public class myFirstScript : MonoBehaviour
 
         string s6 = i2.ToString();
 
-        string = i1 + i2 + s1; // itt elõbb összeadja a két integert
+        // string = i1 + i2 + s1; // itt elõbb összeadja a két integert
 
-        float ff1 = 3,5f;
+        // float ff1 = 3,5f;
         int ii1 = 4;
 
-        int ii2 = (int)ff1; //explicit castolás
+        // int ii2 = (int)ff1; //explicit castolás
         float ff2 = ii1;
 
         string numberText = "234";
