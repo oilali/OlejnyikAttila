@@ -6,6 +6,8 @@ public class playerMoves : MonoBehaviour
 
     [SerializeField] float speed;
 
+    [SerializeField] float angularSpeed = 180;
+
 
     // Update is called once per frame
     void Update()
@@ -46,10 +48,18 @@ public class playerMoves : MonoBehaviour
 
         transform.position += velocity * howQuick;
 
+
+
         if (direction != Vector3.zero)
         {
 
-            transform.rotation = Quaternion.LookRotation(direction);
+            // transform.rotation = Quaternion.LookRotation(direction);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            Quaternion currentRotation = transform.rotation;
+            float maxStepInAngle = angularSpeed * Time.deltaTime;
+
+            transform.rotation = Quaternion.RotateTowards(currentRotation, targetRotation, maxStepInAngle);
+
 
         }
 
