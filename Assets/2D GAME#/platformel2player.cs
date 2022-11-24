@@ -4,17 +4,21 @@ public class platformel2player : MonoBehaviour
 {
 
     [SerializeField] new Rigidbody2D rigidbody;
-    [SerializeField] float jumpForce;
+    [SerializeField] HealthObject healthObject;
+    [SerializeField] float jumpVelocity;
     [SerializeField] float moveForce;
     [SerializeField] int maxJumps;
 
     bool isGrounded;
     int currentJump;
 
+    JumpMultiplier jumpPlatform;
+
     private void OnValidate()
     {
 
         rigidbody = GetComponent<Rigidbody2D>();
+        healthObject = GetComponent<HealthObject>();
 
     }
 
@@ -22,14 +26,30 @@ public class platformel2player : MonoBehaviour
     void Update()
     {
 
+        if (healthObject != null && healthObject.isDead()) { return; }
+
         if ((isGrounded || currentJump > 0) && Input.GetKeyDown(KeyCode.Space))
         {
             rigidbody.velocity = Vector2.zero;
-            rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // ForceMode2D.Force
+
+            Vector2 jump = Vector2.up * jumpVelocity;
+
+
+
+            rigidbody.AddForce(jump, ForceMode2D.Impulse); // ForceMode2D.Force
 
             if (!isGrounded) { currentJump--; }
 
         }
+
+        if (jumpPlatform != null)
+        {
+            Vector2 jump = Vector2.up * jumpVelocity;
+            // jump *= 2;
+            rigidbody.AddForce(jump * jumpPlatform.mult, ForceMode2D.Impulse);
+
+        }
+
         /*
                 if (Input.GetKey(KeyCode.LeftArrow))
                 {
@@ -62,19 +82,28 @@ public class platformel2player : MonoBehaviour
 
         isGrounded = true;
 
-        Debug.Log("Collide" + collision.otherCollider.name);
+        //   Debug.Log("Collide" + collision.otherCollider.name);
+        jumpPlatform = collision.gameObject.GetComponent<JumpMultiplier>();
+
+
+
+
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
 
         isGrounded = false;
+        jumpPlatform = null;
+
 
         Debug.Log("Exit");
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
+
+        if (healthObject != null && healthObject.isDead()) { return; }
 
     }
 
