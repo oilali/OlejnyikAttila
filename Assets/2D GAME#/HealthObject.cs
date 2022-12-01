@@ -9,6 +9,8 @@ public class HealthObject : MonoBehaviour
     [SerializeField] int maxHealth = 100;
     [SerializeField] TMP_Text textComponent;
 
+    [SerializeField] GameObject objectTurnOn;
+
     [SerializeField] Color maxHealthColor;
     [SerializeField] Color zeroHealthColor;
 
@@ -37,6 +39,7 @@ public class HealthObject : MonoBehaviour
 
         currentHealth = 0;
         UpdateText();
+        TestDeath();
 
     }
 
@@ -53,5 +56,18 @@ public class HealthObject : MonoBehaviour
         currentHealth = currentHealth - 10;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateText();
+        TestDeath();
+    }
+
+    void TestDeath()
+    {
+
+        if (isDead())
+        {
+
+            objectTurnOn?.SetActive(true); //a kérdõjel azt jelenti, hogy ha esetleg null, azaz valami feleslegesen hívja, akkor nem fut le.
+
+        }
+
     }
 }
