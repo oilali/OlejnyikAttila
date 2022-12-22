@@ -8,6 +8,18 @@ public class playerMoves : MonoBehaviour
 
     [SerializeField] float angularSpeed = 180;
 
+    [SerializeField] Animator anim;
+
+    private void OnValidate()
+    {
+        if (anim == null)
+        {
+
+            anim = GetComponent<Animator>();
+
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -48,7 +60,8 @@ public class playerMoves : MonoBehaviour
 
         transform.position += velocity * howQuick;
 
-
+        bool isMoving = velocity != Vector3.zero;
+        anim.SetBool("isRunning", isMoving);
 
         if (direction != Vector3.zero)
         {

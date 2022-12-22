@@ -14,14 +14,35 @@ public class HealthObject : MonoBehaviour
     [SerializeField] Color maxHealthColor;
     [SerializeField] Color zeroHealthColor;
 
-
     int currentHealth;
+
+    const string healthKey = "health";
+
+    private void OnDestroy()
+    {
+        PlayerPrefs.SetInt(healthKey, currentHealth);
+
+
+
+    }
 
     // Start is called before the first frame update
     void Start()
     {
 
-        currentHealth = maxHealth;
+        if (PlayerPrefs.HasKey(healthKey))
+        {
+
+            currentHealth = PlayerPrefs.GetInt(healthKey);
+
+
+        }
+        if (currentHealth == 0)
+        {
+
+            currentHealth = maxHealth;
+
+        }
 
         UpdateText();
     }

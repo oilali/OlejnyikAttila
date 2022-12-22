@@ -105,6 +105,31 @@ public class platformel2player : MonoBehaviour
 
         if (healthObject != null && healthObject.isDead()) { return; }
 
+        float inputX = Input.GetAxis("Horizontal");
+
+        /*
+        if (inputX != 0)
+        {
+
+            float direction = Mathf.Sign(inputX); //ha pozitív 1, ha negatív 0 - ez adja meg az irányt.
+            Vector3 scale = transform.localScale;
+            transform.localScale = new Vector3(direction * Mathf.Abs(scale.x), scale.x, scale.z);
+
+        }*/
+
+        if (inputX > 0)
+        {
+
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+
+
+        }
+        else if (inputX < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+
+        }
+
     }
 
 }
